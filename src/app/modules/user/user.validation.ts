@@ -2,14 +2,21 @@ import { z } from "zod";
 
 const createUserSchema = z.object({
   body: z.object({
-    name: z.string({
-      required_error: "Name is required",
-      invalid_type_error: "Name must be a string",
+    name: z.object({
+      firstName: z.string({
+        required_error: "First name is required",
+        invalid_type_error: "First name must be a string",
+      }),
+      middleName: z.string().optional(),
+      lastName: z.string({
+        required_error: "Last name is required",
+        invalid_type_error: "Last name must be a string",
+      }),
     }),
     email: z
       .string({
         required_error: "Email is required",
-        invalid_type_error: "Name must be a string",
+        invalid_type_error: "Email must be a string",
       })
       .email({
         message: "Must be a valid email",
@@ -30,6 +37,9 @@ const createUserSchema = z.object({
     }),
     address: z.string().optional(),
   }),
+  query: z.object({}).optional(),
+  params: z.object({}).optional(),
+  cookies: z.object({}).optional(),
 });
 
 export const userValidation = {

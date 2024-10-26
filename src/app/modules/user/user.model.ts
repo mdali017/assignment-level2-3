@@ -2,14 +2,14 @@ import { Schema, model, connect } from "mongoose";
 import { TUser, TUserName } from "./user.interface";
 
 const userNameSchema = new Schema<TUserName>({
-  firstName: { type: String, required: true },
+  firstName: { type: String },
   middleName: { type: String },
-  lastName: { type: String, required: true },
+  lastName: { type: String },
 });
 
 // 2. Create a Schema corresponding to the document interface.
 const userSchema = new Schema<TUser>({
-  name: { type: userNameSchema, required: true },
+  name: { type: userNameSchema },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   phone: { type: String, required: true },
