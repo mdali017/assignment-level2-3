@@ -1,13 +1,9 @@
 import { Router } from "express";
 import { UserRoutes } from "../modules/user/user.routes";
 import { ServicesRoute } from "../modules/services/services.route";
-// import { StudentRoute } from "../modules/student/student.route";
-// import { UserRoutes } from "../modules/user/user.route";
-// import { AcademicSemesterRoutes } from "../modules/academicSemester/academicSemester.routes";
-// import { AcademicFacultyRoutes } from "../modules/academicFaculty/academicFaculty.routes";
-// import { AcademicDepartmentRoutes } from "../modules/academicDepartment/academicDepartment.routes";
-// import { CourseRoute } from "../modules/Course/course.route";
-
+import path from "path";
+import { SlotRoute } from "../modules/slot/slot.routes";
+import { BookingRoute } from "../modules/booking/booking.routes";
 const router = Router();
 
 const moduleRoutes = [
@@ -18,6 +14,14 @@ const moduleRoutes = [
   {
     path: "/services",
     route: ServicesRoute,
+  },
+  {
+    path: "/services/slots",
+    route: SlotRoute,
+  },
+  {
+    path: "/bookings",
+    route: BookingRoute,
   },
   //   {
   //     path: "/academic-semesters",

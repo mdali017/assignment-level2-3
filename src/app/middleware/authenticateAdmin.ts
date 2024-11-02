@@ -19,7 +19,8 @@ export const authenticateAdmin = (req: Request, res: Response, next: NextFunctio
     }
 
     // Pass user information to the request
-    req.user = decoded;
+    
+    // req.user  = decoded;
     next();
   } catch (error) {
     return res.status(401).json({ message: "Invalid or expired token" });

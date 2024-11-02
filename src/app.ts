@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import cors from "cors";
 import router from "./app/routes";
+import { SlotRoute } from "./app/modules/slot/slot.routes";
 
 const app: Application = express();
 
@@ -11,6 +12,7 @@ app.use(cors());
 // app.use("/api/v1/users", UserRoutes);
 // app.use("/api/v1/students", StudentRoute);
 app.use("/api", router);
+// app.use("/api/services/slots", SlotRoute);
 
 app.get("/", (req: Request, res: Response) => {
   // Promise.reject();
