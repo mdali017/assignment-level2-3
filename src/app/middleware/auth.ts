@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../modules/user/user.model"; // Adjust import as needed
+import { UserModel } from "../modules/user/user.model";
 
 interface AuthenticatedRequest extends Request {
   user?: any;
@@ -24,7 +24,6 @@ export const authenticateAdmin = async (
       return;
     }
 
-    // Verify the token
     const decoded = jwt.verify(token, secret) as { id: string };
     const user = await UserModel.findById(decoded.id);
 
@@ -38,7 +37,6 @@ export const authenticateAdmin = async (
       return;
     }
 
-    // Use type assertion here
     (req as AuthenticatedRequest).user = user;
     next();
   } catch (error) {

@@ -1,4 +1,3 @@
-// auth.ts
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 
@@ -16,11 +15,12 @@ export const authenticateUser = (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): void => {
   try {
     const authHeader = req.headers.authorization;
     if (!authHeader) {
-      return res.status(401).json({ message: "Authorization header missing" });
+      res.status(401).json({ message: "Authorization header missing" });
+      return;
     }
 
     const token = authHeader.split(" ")[1];
@@ -30,7 +30,8 @@ export const authenticateUser = (
     };
 
     if (decoded.role !== "user") {
-      return res.status(403).json({ message: "Forbidden: Users only" });
+      res.status(403).json({ message: "Forbidden: Users only" });
+      return;
     }
 
     // Use type assertion to add `user` property to `req`
@@ -38,6 +39,7 @@ export const authenticateUser = (
 
     next();
   } catch (error) {
-    return res.status(401).json({ message: "Invalid or expired token" });
+    res.status(401).json({ message: "Invalid or expired token" });
+    return;
   }
 };
