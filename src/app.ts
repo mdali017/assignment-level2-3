@@ -3,6 +3,7 @@ import cors from "cors";
 import router from "./app/routes";
 import { SlotRoute } from "./app/modules/slot/slot.routes";
 import { BookingRoute } from "./app/modules/booking/booking.routes";
+import notFoundRoute from "./app/utils/notFoundRoutes";
 
 const app: Application = express();
 
@@ -27,6 +28,6 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // app.use(globalErrorHandler);
-// app.use(notFound);
+app.use(notFoundRoute);
 
 export default app;
