@@ -15,14 +15,18 @@ const moduleRoutes = [
     path: "/services",
     route: ServicesRoute,
   },
-  {
-    path: "/services/slots",
-    route: SlotRoute,
-  },
-  {
-    path: "/bookings",
-    route: BookingRoute,
-  },
+  // {
+  //   path: "/services/slots",
+  //   route: SlotRoute,
+  // },
+  // {
+  //   path: "/slots", // Updated this to directly refer to `/slots`
+  //   route: SlotRoute,
+  // },
+  // {
+  //   path: "/bookings",
+  //   route: BookingRoute,
+  // },
   //   {
   //     path: "/academic-semesters",
   //     route: AcademicSemesterRoutes,

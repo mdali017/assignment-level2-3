@@ -1,15 +1,18 @@
-import { Schema, model, connect } from "mongoose";
+import { Schema, model } from "mongoose";
 import { TSlot } from "./slot.interface";
-// import { TUser, TUserName } from "./user.interface";
 
-// 2. Create a Schema corresponding to the document interface.
-const slotSchema = new Schema<TSlot>({
-  service: { type: Schema.Types.ObjectId, ref: "Services" },
-  date: { type: String, required: true },
-  startTime: { type: String, required: true },
-  endTime: { type: String, required: true },
-  isBooked: { type: Boolean, default: false },
-});
+// Create the schema with timestamps enabled
+const slotSchema = new Schema<TSlot>(
+  {
+    service: { type: Schema.Types.ObjectId, ref: "Services", required: true },
+    date: { type: String, required: true },
+    startTime: { type: String, required: true },
+    endTime: { type: String, required: true },
+    isBooked: { type: Boolean, default: false },
+  },
+  {
+    timestamps: true, // Adds createdAt and updatedAt fields automatically
+  }
+);
 
-// 3. Create a Model.
 export const SlotModel = model<TSlot>("Slot", slotSchema);

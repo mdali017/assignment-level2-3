@@ -3,9 +3,9 @@ import { TBooking } from "./booking.interface"; // Adjust the path if necessary
 
 // Define the schema based on the TBooking interface
 const bookingSchema = new Schema<TBooking>({
-  customer: { type: Schema.Types.ObjectId, ref: "Customer", required: true }, // Ensure "Customer" matches your actual model name
-  service: { type: Schema.Types.ObjectId, ref: "Service", required: true }, // Adjust "Service" to match your actual service model name
-  slot: { type: Schema.Types.ObjectId, ref: "Slot", required: true }, // Ensure "Slot" matches your slot model name
+  customer: { type: Schema.Types.ObjectId, ref: "User", required: true },
+  serviceId: { type: Schema.Types.ObjectId, ref: "Services", required: true },
+  slotId: { type: Schema.Types.ObjectId, ref: "Slot", required: true },
   vehicleType: {
     type: String,
     enum: [

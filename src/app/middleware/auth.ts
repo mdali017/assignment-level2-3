@@ -1,34 +1,48 @@
-// auth.js
-import { RequestHandler } from "express";
+import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
-import { UserModel } from "../modules/user/user.model";
- // Make sure to use the correct path to your user model
+import { UserModel } from "../modules/user/user.model"; // Adjust import as needed
 
-export const authenticateAdmin: RequestHandler = async (req, res, next) => {
+interface AuthenticatedRequest extends Request {
+  user?: any;
+}
+
+export const authenticateAdmin = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    // Check if the authorization header is present
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return res.status(403).json({ message: "Access denied. No token provided." });
+      res.status(403).json({ message: "Access denied. No token provided." });
+      return;
+    }
+
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      res.status(500).json({ message: "JWT_SECRET is not defined." });
+      return;
     }
 
     // Verify the token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, secret) as { id: string };
     const user = await UserModel.findById(decoded.id);
 
     if (!user) {
-      return res.status(404).json({ message: "User not found." });
+      res.status(404).json({ message: "User not found." });
+      return;
     }
 
-    // Check if the user has an admin role
     if (user.role !== "admin") {
-      return res.status(403).json({ message: "Access denied. Admins only." });
+      res.status(403).json({ message: "Access denied. Admins only." });
+      return;
     }
 
-    // Attach user to the request and continue
-    req.user = user;
+    // Use type assertion here
+    (req as AuthenticatedRequest).user = user;
     next();
   } catch (error) {
     res.status(401).json({ message: "Invalid token." });
+    return;
   }
 };
