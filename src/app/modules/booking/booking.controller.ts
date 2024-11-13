@@ -1,8 +1,17 @@
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { BookingService } from "./booking.service";
+import { Request, Response, NextFunction } from "express";
 
-const createBooking = catchAsync(async (req, res, next) => {
+// Define AuthenticatedRequest to include `user` property
+interface AuthenticatedRequest extends Request {
+  user?: {
+    id: string;
+    role: string;
+  };
+}
+
+const createBooking = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const result = await BookingService.createBookingIntoDB(req.body);
 
   sendResponse(res, {
@@ -13,7 +22,7 @@ const createBooking = catchAsync(async (req, res, next) => {
   });
 });
 
-const getAllBookings = catchAsync(async (req, res, next) => {
+const getAllBookings = catchAsync(async (req: Request, res: Response, next: NextFunction) => {
   const result = await BookingService.getAllBookingsFromDB();
   sendResponse(res, {
     statusCode: 200,
@@ -23,9 +32,8 @@ const getAllBookings = catchAsync(async (req, res, next) => {
   });
 });
 
-const getMyBookings = catchAsync(async (req, res, next) => {
-  const userId = req.user?.id;
-  // console.log(userId)
+const getMyBookings = catchAsync(async (req: AuthenticatedRequest, res: Response, next: NextFunction) => {
+  const userId: any = req.user?.id; // TypeScript now recognizes `user`
   const result = await BookingService.getMyBookingsFromDB(userId);
   sendResponse(res, {
     statusCode: 200,
