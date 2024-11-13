@@ -14,12 +14,16 @@ app.use(cors());
 // app.use("/api/v1/students", StudentRoute);
 app.use("/api", router);
 app.use("/api/", SlotRoute);
-app.use("/api", BookingRoute)
+app.use("/api", BookingRoute);
 // app.use("/api/services/slots", SlotRoute);
 
 app.get("/", (req: Request, res: Response) => {
   // Promise.reject();
-  res.send("Welcome To The Server !!!");
+  res.status(200).json({
+    success: true,
+    status: 200,
+    message: "Car Washing Server is running successfully",
+  });
 });
 
 // app.use(globalErrorHandler);
