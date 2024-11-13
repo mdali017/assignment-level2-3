@@ -4,6 +4,7 @@ import router from "./app/routes";
 import { SlotRoute } from "./app/modules/slot/slot.routes";
 import { BookingRoute } from "./app/modules/booking/booking.routes";
 import notFoundRoute from "./app/utils/notFoundRoutes";
+import globalErrorHandler from "./app/utils/globalErrorHandler";
 
 const app: Application = express();
 
@@ -27,7 +28,7 @@ app.get("/", (req: Request, res: Response) => {
   });
 });
 
-// app.use(globalErrorHandler);
+app.use(globalErrorHandler);
 app.use(notFoundRoute);
 
 export default app;
