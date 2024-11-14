@@ -39,7 +39,11 @@ export const authenticateUser = (
 
     next();
   } catch (error) {
-    res.status(401).json({ message: "Invalid or expired token" });
+    res.status(401).json({
+      success: false,
+      statusCode: 401,
+      message: "You have no access to this route",
+    });
     return;
   }
 };
