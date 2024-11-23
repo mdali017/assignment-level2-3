@@ -9,6 +9,11 @@ const slotSchema = new Schema<TSlot>(
     startTime: { type: String, required: true },
     endTime: { type: String, required: true },
     isBooked: { type: Boolean, default: false },
+    status: {
+      type: String,
+      enum: ["available", "cencelled"],
+      default: "available",
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt fields automatically
