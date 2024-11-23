@@ -15,7 +15,7 @@ app.use(cors());
 // app.use("/api/v1/users", UserRoutes);
 // app.use("/api/v1/students", StudentRoute);
 app.use("/api", router);
-app.use("/api/", SlotRoute);
+app.use("/api", SlotRoute);
 app.use("/api", BookingRoute);
 // app.use("/api/services/slots", SlotRoute);
 

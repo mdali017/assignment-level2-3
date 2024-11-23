@@ -68,28 +68,37 @@ const createSlot = catchAsync(async (req, res) => {
   return undefined; // Explicitly return undefined to satisfy the void return type
 });
 
-const getAvailableSlotsController = catchAsync(
-  async (req: Request, res: Response) => {
-    const { date, serviceId } = req.query;
+const getAllSlots = catchAsync(async (req, res) => {
+  const result = await SlotService.getAllSlotsFromDB();
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "All slots fetched successfully",
+    data: result,
+  });
+});
 
-    const availableSlots = await SlotService.getAvailableSlots(date, serviceId);
+const getAvailableSlots = catchAsync(async (req: Request, res: Response) => {
+  const { date, serviceId } = req.query;
 
-    // res.status(200).json({
-    //   success: true,
-    //   message: "Available slots fetched successfully",
-    //   data: availableSlots,
-    // });
+  const availableSlots = await SlotService.getAvailableSlots(date, serviceId);
 
-    sendResponse(res, {
-      statusCode: 200,
-      success: true,
-      message: "Available slots fetched successfully",
-      data: availableSlots,
-    });
-  }
-);
+  // res.status(200).json({
+  //   success: true,
+  //   message: "Available slots fetched successfully",
+  //   data: availableSlots,
+  // });
 
-export const slotController = {
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Available slots fetched successfully",
+    data: availableSlots,
+  });
+});
+
+export const SlotController = {
   createSlot,
-  getAvailableSlotsController,
+  getAvailableSlots,
+  getAllSlots,
 };
