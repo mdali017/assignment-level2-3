@@ -12,7 +12,7 @@ const getAllSlotsFromDB = async () => {
   const slots = await SlotModel.find().populate("service");
   return slots.map((slot) => ({
     ...slot.toObject(),
-    isBooked: slot.isBooked ? "booked" : "available", // Transform isBooked
+    isBooked: false,
   }));
 };
 
