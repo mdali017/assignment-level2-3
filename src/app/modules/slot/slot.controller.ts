@@ -80,8 +80,9 @@ const getAllSlots = catchAsync(async (req, res) => {
 
 const getAvailableSlots = catchAsync(async (req: Request, res: Response) => {
   const { date, serviceId } = req.query;
-
+  
   const availableSlots = await SlotService.getAvailableSlots(date, serviceId);
+  // console.log(availableSlots)
 
   // res.status(200).json({
   //   success: true,

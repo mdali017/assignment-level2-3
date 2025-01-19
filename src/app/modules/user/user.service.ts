@@ -27,7 +27,7 @@ const loginUserIntoDB = async (payload: {
 
   // Find user by email
   const user = await UserModel.findOne({ email: payload.email });
-  console.log(user);
+  // console.log(user);
   if (!user) {
     throw new Error("User not found");
   }

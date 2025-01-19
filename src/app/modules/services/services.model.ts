@@ -5,6 +5,7 @@ import { TServices } from "./services.interface";
 // 2. Create a Schema corresponding to the document interface.
 const servicesSchema = new Schema<TServices>({
   name: { type: String, required: true },
+  image: { type: String },
   description: { type: String, required: true },
   price: { type: Number, required: true },
   duration: { type: String, required: true },

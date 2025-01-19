@@ -4,7 +4,7 @@ const createASlotIntoDB = async (payload: any) => {
   const slot = await SlotModel.create(payload);
   return {
     ...slot.toObject(),
-    isBooked: false, 
+    isBooked: false,
   };
 };
 
@@ -27,7 +27,7 @@ const getAvailableSlots = async (date?: any, serviceId?: any) => {
 };
 
 const updateASlotFromDB = async (id: any, payload: any) => {
-  console.log(payload);
+  // console.log(payload);
   const result = await SlotModel.findByIdAndUpdate(id, payload, { new: true });
   return result;
 };

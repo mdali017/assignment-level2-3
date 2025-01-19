@@ -1,14 +1,23 @@
 import catchAsync from "../../utils/catchAsync";
 import sendResponse from "../../utils/sendResponse";
 import { ServicesService } from "./services.service";
+import { SingleFileUpload } from "../../helpers/singleFileUpload";
 
 const createServices = catchAsync(async (req, res, next) => {
-  const result = await ServicesService.createAServicesIntoDB(req.body);
+  const data = JSON.parse(req.body.data); // Parsing stringified JSON from the form
+  const file = req.file;
+
+  if (file) {
+    const imageUrl = await SingleFileUpload.uploadFileToCloudinary(file.path);
+    data.image = imageUrl; // Add the uploaded image URL to the payload
+  }
+
+  const result = await ServicesService.createAServicesIntoDB(data);
 
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Services created successfully",
+    message: "Service created successfully",
     data: result,
   });
 });
@@ -34,14 +43,27 @@ const getSingleService = catchAsync(async (req, res, next) => {
 });
 
 const updateServices = catchAsync(async (req, res, next) => {
+  // console.log("click");
+  const data = JSON.parse(req.body.data);
+  const file = req.file;
+
+  // console.log(data);
+  // console.log(file);
+
+  if (file) {
+    const imageUrl = await SingleFileUpload.uploadFileToCloudinary(file.path);
+    data.image = imageUrl;
+  }
+
   const result = await ServicesService.updateAServicesIntoDB(
     req.params.id,
-    req.body
+    data
   );
+
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Services updated successfully",
+    message: "Service updated successfully",
     data: result,
   });
 });
@@ -51,7 +73,7 @@ const deleteServices = catchAsync(async (req, res, next) => {
   sendResponse(res, {
     statusCode: 200,
     success: true,
-    message: "Services deleted successfully",
+    message: "Service deleted successfully",
     data: result,
   });
 });
